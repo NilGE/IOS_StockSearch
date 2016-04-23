@@ -22,12 +22,40 @@ class StockSearchView: UIViewController, UITableViewDataSource, UITableViewDeleg
     
     // MARK: Actions
     @IBAction func getQuote(sender: UIButton) {
+        if symbolTextField.text!.isEmpty {
+            let alert = UIAlertController(title: "Please Enter a Stock Name or Symbol",
+                                          message: "",
+                                          preferredStyle: .Alert)
+            let okAction = UIAlertAction(title: "OK", style: .Default, handler: { (action: UIAlertAction)->Void in})
+            alert.addAction(okAction)
+            presentViewController(alert, animated: true, completion: nil)
+            return
+        }
+        
+        var symbol = symbolTextField.text!
+        
+        if symbol.containsString("-") {
+            let symbolArray = symbol.characters.split("-").map(String.init)
+            print(symbolArray[0])
+            symbol = symbolArray[0]
+        }
+        
         let url = "http://certain-mystery-126718.appspot.com/"
         Alamofire.request(.GET, url, parameters: ["symbol": symbol]).responseJSON {
                 response in switch response.result {
                 case .Success(let JSON):
                     print("Success with JSON: \(JSON)")
                     let response = JSON as! NSDictionary
+            
+                    if response.objectForKey("Message") != nil {
+                        let alert = UIAlertController(title: "Invalid Symbol",
+                            message: "",
+                            preferredStyle: .Alert)
+                        let okAction = UIAlertAction(title: "OK", style: .Default, handler: { (action: UIAlertAction)->Void in})
+                        alert.addAction(okAction)
+                        self.presentViewController(alert, animated: true, completion: nil)
+                        return
+                    }
                     
                     //init stock
                     self.currStock = Stock(
@@ -37,8 +65,7 @@ class StockSearchView: UIViewController, UITableViewDataSource, UITableViewDeleg
                         lastPrice: String(response.objectForKey("LastPrice")!),
                         change: String(response.objectForKey("Change")!),
                         changePercent: String(response.objectForKey("ChangePercent")!),
-//                        timeStamp: String(response.objectForKey("TimeStamp")!),
-                        timeStamp: "112",
+                        timeStamp: String(response.objectForKey("Timestamp")!),
                         marketCap: String(response.objectForKey("MarketCap")!),
                         volume: String(response.objectForKey("Volume")!),
                         changeYTD: String(response.objectForKey("ChangeYTD")!),
@@ -47,10 +74,8 @@ class StockSearchView: UIViewController, UITableViewDataSource, UITableViewDeleg
                         low: String(response.objectForKey("Low")!),
                         open: String(response.objectForKey("Open")!))
                     
-                    print(self.currStock.change)
                     
-//                    let curr = response.objectForKey("Symbol")
-//                    print("curr \(curr)")
+
                 case .Failure(let error):
                      print("Request failed with error: \(error)")
                 }
@@ -127,9 +152,6 @@ extension StockSearchView: AutocompleteDelegate {
     }
     
     func didSelectItem(item: AutocompletableOption) {
-        let symbolCompany = item.text
-        let symbolArray = symbolCompany.characters.split("-").map(String.init)
-        print(symbolArray[0])
-        symbol = symbolArray[0]
+        
     }
 }

@@ -10,7 +10,6 @@
 		5F31DE3A31FEB21FAFAB57EE /* Pods_StockSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C7F0D63F89853E5A8CA517B /* Pods_StockSearch.framework */; };
 		6338549D1CC9592F006ACE16 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6338549C1CC9592F006ACE16 /* AppDelegate.swift */; };
 		6338549F1CC9592F006ACE16 /* StockSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6338549E1CC9592F006ACE16 /* StockSearchView.swift */; };
-		633854A21CC9592F006ACE16 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 633854A01CC9592F006ACE16 /* Main.storyboard */; };
 		633854A51CC9592F006ACE16 /* StockSearch.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 633854A31CC9592F006ACE16 /* StockSearch.xcdatamodeld */; };
 		633854A71CC9592F006ACE16 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 633854A61CC9592F006ACE16 /* Assets.xcassets */; };
 		633854AA1CC9592F006ACE16 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 633854A81CC9592F006ACE16 /* LaunchScreen.storyboard */; };
@@ -18,6 +17,7 @@
 		633854C01CC96B11006ACE16 /* FavoriteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633854BF1CC96B11006ACE16 /* FavoriteTableViewCell.swift */; };
 		63452FDA1CC9A87C005BC283 /* Stock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63452FD91CC9A87C005BC283 /* Stock.swift */; };
 		6345303E1CCAE801005BC283 /* StockDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6345303D1CCAE801005BC283 /* StockDetailView.swift */; };
+		634530541CCB18F2005BC283 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 634530521CCB18F2005BC283 /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,7 +36,6 @@
 		633854991CC9592F006ACE16 /* StockSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StockSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6338549C1CC9592F006ACE16 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6338549E1CC9592F006ACE16 /* StockSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockSearchView.swift; sourceTree = "<group>"; };
-		633854A11CC9592F006ACE16 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		633854A41CC9592F006ACE16 /* StockSearch.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = StockSearch.xcdatamodel; sourceTree = "<group>"; };
 		633854A61CC9592F006ACE16 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		633854A91CC9592F006ACE16 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -47,6 +46,7 @@
 		633854BF1CC96B11006ACE16 /* FavoriteTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FavoriteTableViewCell.swift; path = ../FavoriteTableViewCell.swift; sourceTree = "<group>"; };
 		63452FD91CC9A87C005BC283 /* Stock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stock.swift; sourceTree = "<group>"; };
 		6345303D1CCAE801005BC283 /* StockDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StockDetailView.swift; sourceTree = "<group>"; };
+		634530531CCB18F2005BC283 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CAAC22261C48356BA758087C /* Pods-StockSearch.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StockSearch.release.xcconfig"; path = "Pods/Target Support Files/Pods-StockSearch/Pods-StockSearch.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -96,7 +96,7 @@
 				633854BF1CC96B11006ACE16 /* FavoriteTableViewCell.swift */,
 				6338549E1CC9592F006ACE16 /* StockSearchView.swift */,
 				6345303D1CCAE801005BC283 /* StockDetailView.swift */,
-				633854A01CC9592F006ACE16 /* Main.storyboard */,
+				634530521CCB18F2005BC283 /* Main.storyboard */,
 				633854A61CC9592F006ACE16 /* Assets.xcassets */,
 				633854A81CC9592F006ACE16 /* LaunchScreen.storyboard */,
 				633854AB1CC9592F006ACE16 /* Info.plist */,
@@ -218,9 +218,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				634530541CCB18F2005BC283 /* Main.storyboard in Resources */,
 				633854AA1CC9592F006ACE16 /* LaunchScreen.storyboard in Resources */,
 				633854A71CC9592F006ACE16 /* Assets.xcassets in Resources */,
-				633854A21CC9592F006ACE16 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -314,20 +314,20 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		633854A01CC9592F006ACE16 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				633854A11CC9592F006ACE16 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		633854A81CC9592F006ACE16 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				633854A91CC9592F006ACE16 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		634530521CCB18F2005BC283 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				634530531CCB18F2005BC283 /* Base */,
+			);
+			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

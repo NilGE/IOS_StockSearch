@@ -52,9 +52,12 @@ class Stock {
         self.lastPrice = "$ \(getRound(lastPrice))"
         self.change = "\(getRound(change))(\(getRound(changePercent))%)"
         self.changePositive = Double(changePercent) >= 0 ? true:false
-//        let formatter = NSDateFormatter()
-//        formatter.dateFormat = "MMM d yyyy hh:mm"
-//        self.time = formatter.stringFromDate(formatter.dateFromString(timeStamp)!)
+        let formatter = NSDateFormatter()
+        formatter.locale = NSLocale(localeIdentifier: "UTC")
+        formatter.dateFormat = "EEE MMM dd HH:mm:ss Z yyyy"
+        let date = formatter.dateFromString(timeStamp)!
+        formatter.dateFormat = "MMM d yyyy hh:mm"
+        self.time = formatter.stringFromDate(date)
         self.time = timeStamp
         let dMarketCap = Double(marketCap)!
         if dMarketCap > 1000000000 {
