@@ -13,24 +13,49 @@ import Alamofire
 class StockSearchView: UIViewController, UITableViewDataSource, UITableViewDelegate {
     // MARK: Properties
     @IBOutlet weak var symbolTextField: UITextField!
+    @IBOutlet weak var autoCompleteContainerVIew: UIView!
     
-    
+    var symbol: String!
+    var currStock: Stock!
+    var autoCompleteViewController: AutoCompleteViewController!
+    var isFirstLoad: Bool = true
     
     // MARK: Actions
     @IBAction func getQuote(sender: UIButton) {
-        let symbol = symbolTextField.text!
         let url = "http://certain-mystery-126718.appspot.com/"
         Alamofire.request(.GET, url, parameters: ["symbol": symbol]).responseJSON {
                 response in switch response.result {
                 case .Success(let JSON):
                     print("Success with JSON: \(JSON)")
                     let response = JSON as! NSDictionary
-                    let symbol = response.objectForKey("Symbol")
-                    print(symbol)
+                    
+                    //init stock
+                    self.currStock = Stock(
+                        status: String(response.objectForKey("Status")!),
+                        name: String(response.objectForKey("Name")!),
+                        symbol: String(response.objectForKey("Symbol")!),
+                        lastPrice: String(response.objectForKey("LastPrice")!),
+                        change: String(response.objectForKey("Change")!),
+                        changePercent: String(response.objectForKey("ChangePercent")!),
+//                        timeStamp: String(response.objectForKey("TimeStamp")!),
+                        timeStamp: "112",
+                        marketCap: String(response.objectForKey("MarketCap")!),
+                        volume: String(response.objectForKey("Volume")!),
+                        changeYTD: String(response.objectForKey("ChangeYTD")!),
+                        changePercentYTD: String(response.objectForKey("ChangePercentYTD")!),
+                        high: String(response.objectForKey("High")!),
+                        low: String(response.objectForKey("Low")!),
+                        open: String(response.objectForKey("Open")!))
+                    
+                    print(self.currStock.change)
+                    
+//                    let curr = response.objectForKey("Symbol")
+//                    print("curr \(curr)")
                 case .Failure(let error):
                      print("Request failed with error: \(error)")
                 }
         }
+        
     }
     
    
@@ -55,18 +80,56 @@ class StockSearchView: UIViewController, UITableViewDataSource, UITableViewDeleg
         return 1
     }
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        self.navigationController?.navigationBar.hidden = true
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        if self.isFirstLoad {
+            self.isFirstLoad = false
+            Autocomplete.setupAutocompleteForViewcontroller(self)
+        }
+    }
 
 }
 
+// MARK: Autocomplete
+extension StockSearchView: AutocompleteDelegate {
+    func autoCompleteTextField() -> UITextField {
+        return self.symbolTextField
+    }
+    
+    func autoCompleteThreshold(textField: UITextField) -> Int {
+        return 2
+    }
+    
+
+    func autoCompleteItemsForSearchTerm(term: String) -> [AutocompletableOption] {
+        return [AutocompletableOption]()
+    }
+    
+    func autoCompleteHeight() -> CGFloat {
+        return CGRectGetHeight(self.view.frame) / 3.0
+    }
+    
+    func didSelectItem(item: AutocompletableOption) {
+        let symbolCompany = item.text
+        let symbolArray = symbolCompany.characters.split("-").map(String.init)
+        print(symbolArray[0])
+        symbol = symbolArray[0]
+    }
+}

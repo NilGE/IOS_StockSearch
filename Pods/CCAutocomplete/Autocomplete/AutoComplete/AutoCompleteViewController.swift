@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 let AutocompleteCellReuseIdentifier = "autocompleteCell"
 
@@ -60,27 +61,45 @@ public class AutoCompleteViewController: UIViewController {
             if numberOfCharacters > self.autocompleteThreshold! {
                 self.view.hidden = false
                 guard let searchTerm = textField.text else { return }
-                self.autocompleteItems = self.delegate!.autoCompleteItemsForSearchTerm(searchTerm)
-                UIView.animateWithDuration(self.animationDuration,
-                    delay: 0.0,
-                    options: .CurveEaseInOut,
-                    animations: { () -> Void in
-                        self.view.frame.size.height = min(
-                            CGFloat(self.autocompleteItems!.count) * CGFloat(self.cellHeight!),
-                            self.maxHeight,
-                            self.height
-                        )
-                    },
-                    completion: nil)
-
-                UIView.transitionWithView(self.tableView,
-                    duration: self.animationDuration,
-                    options: .TransitionCrossDissolve,
-                    animations: { () -> Void in
-                        self.tableView.reloadData()
-                    },
-                    completion: nil)
-
+                
+                var result = [AutocompletableOption]()
+                
+                let url = "http://certain-mystery-126718.appspot.com/"
+                Alamofire.request(.GET, url, parameters: ["term": searchTerm]).responseJSON {
+                    response in switch response.result {
+                    case .Success(let JSON):
+//                        print("Success with JSON: \(JSON)")
+                        let response = JSON as! NSArray
+                        for tmp in response {
+                            let symbolCompany = tmp as! NSDictionary
+                            let row =  "\(symbolCompany.objectForKey("Symbol")!)-\(symbolCompany.objectForKey("Name")!)-\(symbolCompany.objectForKey("Exchange")!)"
+                            result.append(AutocompleteCellData(text: row, image: nil) as AutocompletableOption)
+                        }
+                        self.autocompleteItems = result
+                        UIView.animateWithDuration(self.animationDuration,
+                            delay: 0.0,
+                            options: .CurveEaseInOut,
+                            animations: { () -> Void in
+                                self.view.frame.size.height = min(
+                                    CGFloat(self.autocompleteItems!.count) * CGFloat(self.cellHeight!),
+                                    self.maxHeight,
+                                    self.height
+                                )
+                            },
+                            completion: nil)
+                        
+                        UIView.transitionWithView(self.tableView,
+                            duration: self.animationDuration,
+                            options: .TransitionCrossDissolve,
+                            animations: { () -> Void in
+                                self.tableView.reloadData()
+                            },
+                            completion: nil)
+                        
+                    case .Failure(let error):
+                        print("Request failed with error: \(error)")
+                    }
+                }
             } else {
                 self.view.hidden = true
             }
