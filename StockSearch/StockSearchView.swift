@@ -9,6 +9,7 @@
 import UIKit
 import CCAutocomplete
 import Alamofire
+import CoreData
 
 class StockSearchView: UIViewController, UITableViewDataSource, UITableViewDelegate {
     // MARK: Properties
@@ -19,6 +20,8 @@ class StockSearchView: UIViewController, UITableViewDataSource, UITableViewDeleg
     var currStock: Stock!
     var autoCompleteViewController: AutoCompleteViewController!
     var isFirstLoad: Bool = true
+    var favoriteStocks = [NSManagedObject]()
+    @IBOutlet weak var favoriateTableView: UITableView!
     
     // MARK: Actions
     @IBAction func getQuote(sender: UIButton) {
@@ -74,7 +77,7 @@ class StockSearchView: UIViewController, UITableViewDataSource, UITableViewDeleg
                         low: String(response.objectForKey("Low")!),
                         open: String(response.objectForKey("Open")!))
                     
-                    
+                    self.performSegueWithIdentifier("showStockDetail", sender: nil)
 
                 case .Failure(let error):
                      print("Request failed with error: \(error)")
@@ -83,27 +86,43 @@ class StockSearchView: UIViewController, UITableViewDataSource, UITableViewDeleg
         
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "showStockDetail" {
+            let StockDetailViewController = segue.destinationViewController as! StockDetailView
+            StockDetailViewController.stock = self.currStock
+        }
+    }
+    
    
     
     // MARK: Favorite table view
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return favoriteStocks.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("FavoriteTableCell", forIndexPath: indexPath) as! FavoriteTableViewCell
-        cell.symbol.text = "AAPL"
-        cell.companyName.text = "Apple Inc"
-        cell.stockPrice.text = "$ 109.99"
-        cell.changePercenttage.text = "+1.00(0.92%)"
-        cell.marketCap.text = "Market Cap: 609.85 Billion"
+//        cell.symbol.text = "AAPL"
+//        cell.companyName.text = "Apple Inc"
+//        cell.stockPrice.text = "$ 109.99"
+//        cell.changePercenttage.text = "+1.00(0.92%)"
+//        cell.marketCap.text = "Market Cap: 609.85 Billion"
         
+        cell.symbol.text = favoriteStocks[indexPath.row].valueForKey("symbol") as? String
+        cell.companyName.text = favoriteStocks[indexPath.row].valueForKey("companyName") as? String
+        cell.stockPrice.text = favoriteStocks[indexPath.row].valueForKey("stockPrice") as? String
+        cell.changePercenttage.text = favoriteStocks[indexPath.row].valueForKey("change") as? String
+        let green = UIColor.init(red: 49/255, green: 155/255, blue: 82/255, alpha: 1)
+        let red = UIColor.init(red: 225/255, green: 51/255, blue: 60/255, alpha: 1)
+        cell.changePercenttage.backgroundColor = favoriteStocks[indexPath.row].valueForKey("changePositive") as! Bool ? green : red
+        cell.marketCap.text = favoriteStocks[indexPath.row].valueForKey("marketCap") as? String
         return cell
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -113,7 +132,20 @@ class StockSearchView: UIViewController, UITableViewDataSource, UITableViewDeleg
     }
     
     override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        //hide the navigation bar
         self.navigationController?.navigationBar.hidden = true
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let manageContext = appDelegate.managedObjectContext
+        let fetchRequest = NSFetchRequest(entityName: "Stock")
+        
+        do {
+            let results = try manageContext.executeFetchRequest(fetchRequest)
+            favoriteStocks = results as! [NSManagedObject]
+        } catch let error as NSError {
+            print("Could not fetch \(error), \(error.userInfo)")
+        }
+        self.favoriateTableView.reloadData()
     }
     
     override func didReceiveMemoryWarning() {

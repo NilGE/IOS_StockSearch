@@ -23,7 +23,9 @@ class Stock {
     var lowPrice: String
     var openingPrice: String
     
-    
+    var titles = [String]()
+    var contents = [String]()
+    var imgs = [UIImage]()
     
     init?(status: String,
          name: String,
@@ -45,7 +47,7 @@ class Stock {
         }
         
         func getRound(num: String) -> Double {
-            return round(Double(lastPrice)!*100)/100
+            return round(Double(num)!*100)/100
         }
         self.name = name
         self.symbol = symbol
@@ -58,7 +60,6 @@ class Stock {
         let date = formatter.dateFromString(timeStamp)!
         formatter.dateFormat = "MMM d yyyy hh:mm"
         self.time = formatter.stringFromDate(date)
-        self.time = timeStamp
         let dMarketCap = Double(marketCap)!
         if dMarketCap > 1000000000 {
             self.marketCap = "\(round(dMarketCap/10000000)/100) Billion"
@@ -73,6 +74,30 @@ class Stock {
         self.highPrice = "$ \(getRound(high))"
         self.lowPrice = "$ \(getRound(low))"
         self.openingPrice = "$ \(getRound(open))"
+        
+        titles += ["Name"]
+        titles += ["Symbol"]
+        titles += ["Last Price"]
+        titles += ["Change"]
+        titles += ["Time and Date"]
+        titles += ["Market Cap"]
+        titles += ["Volume"]
+        titles += ["Change YTD"]
+        titles += ["High Price"]
+        titles += ["Low Price"]
+        titles += ["Opening Price"]
+        
+        contents += [self.name]
+        contents += [self.symbol]
+        contents += [self.lastPrice]
+        contents += [self.change]
+        contents += [self.time]
+        contents += [self.marketCap]
+        contents += [self.volume]
+        contents += [self.changeYTD]
+        contents += [self.highPrice]
+        contents += [self.lowPrice]
+        contents += [self.openingPrice]
     }
     
     
