@@ -14,35 +14,37 @@ class StockDetailView: UIViewController , UITableViewDataSource, UITableViewDele
     // MARK: Properties
     
     var stock: Stock!
+    var curStock:NSManagedObject!
     
     // MARK : Action
     @IBAction func favoriteBtn(sender: UIButton) {
-        
-//        let filledStar = UIImage(named: "")
-        sender.setImage(UIImage(named: "StarFilled"), forState: .Normal)
-        
-        
+        //select an entity
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let managedContext = appDelegate.managedObjectContext
         
-        let entity = NSEntityDescription.entityForName("Stock", inManagedObjectContext: managedContext)
-        let curStock = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: managedContext)
-        
-        curStock.setValue(self.stock.symbol, forKey: "symbol")
-        curStock.setValue(self.stock.name, forKey: "companyName")
-        curStock.setValue(self.stock.lastPrice, forKey: "stockPrice")
-        curStock.setValue(self.stock.change, forKey: "change")
-        curStock.setValue(self.stock.marketCap, forKey: "marketCap")
-        curStock.setValue(self.stock.changePositive, forKey: "changePositive")
+        if curStock == nil { //if the current stock is not in the favorite list
+            sender.setImage(UIImage(named: "StarFilled"), forState: .Normal)
+            
+            let entity = NSEntityDescription.entityForName("Stock", inManagedObjectContext: managedContext)
+            curStock = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: managedContext)
+            
+            curStock.setValue(self.stock.symbol, forKey: "symbol")
+            curStock.setValue(self.stock.name, forKey: "companyName")
+            curStock.setValue(self.stock.lastPrice, forKey: "stockPrice")
+            curStock.setValue(self.stock.change, forKey: "change")
+            curStock.setValue(self.stock.marketCap, forKey: "marketCap")
+            curStock.setValue(self.stock.changePositive, forKey: "changePositive")
+            
+        } else { // delete the current stock from favorite list
+            sender.setImage(UIImage(named: "StarEmpty"), forState: .Normal)
+            managedContext.deleteObject(curStock)
+        }
         
         do {
             try managedContext.save()
         } catch let error as NSError {
             print("Could not save \(error), \(error.userInfo)")
         }
-        
-        
-        //delete
         
     }
 
@@ -55,6 +57,7 @@ class StockDetailView: UIViewController , UITableViewDataSource, UITableViewDele
     }
     
     override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         self.navigationController?.navigationBar.hidden = false
     }
 
@@ -74,10 +77,31 @@ class StockDetailView: UIViewController , UITableViewDataSource, UITableViewDele
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-//        let cell:UITableViewCell!
+
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCellWithIdentifier("headerCell", forIndexPath:  indexPath) as! StockDetailHeaderTableViewCell
             cell.separatorInset = UIEdgeInsetsMake(0.0, 0.0, 0.0, cell.bounds.size.width)
+            
+            var selectedStocks = [NSManagedObject]()
+            
+            let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            let manageContext = appDelegate.managedObjectContext
+            let fetchRequest = NSFetchRequest(entityName: "Stock")
+            let predicate = NSPredicate(format: "symbol = '\(self.stock.symbol)'")
+            fetchRequest.predicate = predicate
+            do {
+                let results = try manageContext.executeFetchRequest(fetchRequest)
+                selectedStocks = results as! [NSManagedObject]
+            } catch let error as NSError {
+                print("Could not fetch \(error), \(error.userInfo)")
+            }
+            
+            if selectedStocks.count == 0 {
+                curStock = nil
+            } else {
+                curStock = selectedStocks.first
+                cell.favorateBtn.setImage(UIImage(named: "StarFilled"), forState: .Normal)
+            }
             return cell
         } else {
             let cell = tableView.dequeueReusableCellWithIdentifier("stockDetailCell", forIndexPath: indexPath) as! DetailContentTableViewCell

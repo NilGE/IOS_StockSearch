@@ -62,7 +62,7 @@
                                 <rect key="frame" x="10" y="254" width="580" height="346"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FavoriteTableCell" rowHeight="77" id="fNl-kR-WPo" customClass="FavoriteTableViewCell" customModule="StockSearch" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FavoriteTableCell" rowHeight="77" id="fNl-kR-WPo" customClass="FavoriteTableViewCell" customModule="StockSearch" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="580" height="77"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fNl-kR-WPo" id="bmy-9P-TZ9">
@@ -228,7 +228,7 @@
                                         <rect key="frame" x="0.0" y="28" width="560" height="67"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qdB-hY-HA0" id="ExL-tM-Yow">
-                                            <rect key="frame" x="0.0" y="0.0" width="560" height="66.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="560" height="67"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Stock Details" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KhX-Dt-WYj">
@@ -278,13 +278,14 @@
                                         <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <connections>
                                             <outlet property="StockDetailLabel" destination="KhX-Dt-WYj" id="dWG-Ra-Wmq"/>
+                                            <outlet property="favorateBtn" destination="HAr-e1-RRl" id="uwN-Yg-DCc"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="stockDetailCell" id="HRs-mo-DTG" customClass="DetailContentTableViewCell" customModule="StockSearch" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="95" width="560" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HRs-mo-DTG" id="aoc-ab-It1">
-                                            <rect key="frame" x="0.0" y="0.0" width="560" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="560" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Change" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AFv-u0-7FX">

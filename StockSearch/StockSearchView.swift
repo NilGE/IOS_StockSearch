@@ -23,6 +23,50 @@ class StockSearchView: UIViewController, UITableViewDataSource, UITableViewDeleg
     var favoriteStocks = [NSManagedObject]()
     @IBOutlet weak var favoriateTableView: UITableView!
     
+    func showDetailView(symbol: String) {
+        let url = "http://certain-mystery-126718.appspot.com/"
+        Alamofire.request(.GET, url, parameters: ["symbol": symbol]).responseJSON {
+            response in switch response.result {
+            case .Success(let JSON):
+                print("Success with JSON: \(JSON)")
+                let response = JSON as! NSDictionary
+                
+                if response.objectForKey("Message") != nil {
+                    let alert = UIAlertController(title: "Invalid Symbol",
+                        message: "",
+                        preferredStyle: .Alert)
+                    let okAction = UIAlertAction(title: "OK", style: .Default, handler: { (action: UIAlertAction)->Void in})
+                    alert.addAction(okAction)
+                    self.presentViewController(alert, animated: true, completion: nil)
+                    return
+                }
+                
+                //init stock
+                self.currStock = Stock(
+                    status: String(response.objectForKey("Status")!),
+                    name: String(response.objectForKey("Name")!),
+                    symbol: String(response.objectForKey("Symbol")!),
+                    lastPrice: String(response.objectForKey("LastPrice")!),
+                    change: String(response.objectForKey("Change")!),
+                    changePercent: String(response.objectForKey("ChangePercent")!),
+                    timeStamp: String(response.objectForKey("Timestamp")!),
+                    marketCap: String(response.objectForKey("MarketCap")!),
+                    volume: String(response.objectForKey("Volume")!),
+                    changeYTD: String(response.objectForKey("ChangeYTD")!),
+                    changePercentYTD: String(response.objectForKey("ChangePercentYTD")!),
+                    high: String(response.objectForKey("High")!),
+                    low: String(response.objectForKey("Low")!),
+                    open: String(response.objectForKey("Open")!))
+                
+                self.performSegueWithIdentifier("showStockDetail", sender: nil)
+                
+            case .Failure(let error):
+                print("Request failed with error: \(error)")
+            }
+        }
+    }
+    
+    
     // MARK: Actions
     @IBAction func getQuote(sender: UIButton) {
         if symbolTextField.text!.isEmpty {
@@ -42,49 +86,10 @@ class StockSearchView: UIViewController, UITableViewDataSource, UITableViewDeleg
             print(symbolArray[0])
             symbol = symbolArray[0]
         }
-        
-        let url = "http://certain-mystery-126718.appspot.com/"
-        Alamofire.request(.GET, url, parameters: ["symbol": symbol]).responseJSON {
-                response in switch response.result {
-                case .Success(let JSON):
-                    print("Success with JSON: \(JSON)")
-                    let response = JSON as! NSDictionary
-            
-                    if response.objectForKey("Message") != nil {
-                        let alert = UIAlertController(title: "Invalid Symbol",
-                            message: "",
-                            preferredStyle: .Alert)
-                        let okAction = UIAlertAction(title: "OK", style: .Default, handler: { (action: UIAlertAction)->Void in})
-                        alert.addAction(okAction)
-                        self.presentViewController(alert, animated: true, completion: nil)
-                        return
-                    }
-                    
-                    //init stock
-                    self.currStock = Stock(
-                        status: String(response.objectForKey("Status")!),
-                        name: String(response.objectForKey("Name")!),
-                        symbol: String(response.objectForKey("Symbol")!),
-                        lastPrice: String(response.objectForKey("LastPrice")!),
-                        change: String(response.objectForKey("Change")!),
-                        changePercent: String(response.objectForKey("ChangePercent")!),
-                        timeStamp: String(response.objectForKey("Timestamp")!),
-                        marketCap: String(response.objectForKey("MarketCap")!),
-                        volume: String(response.objectForKey("Volume")!),
-                        changeYTD: String(response.objectForKey("ChangeYTD")!),
-                        changePercentYTD: String(response.objectForKey("ChangePercentYTD")!),
-                        high: String(response.objectForKey("High")!),
-                        low: String(response.objectForKey("Low")!),
-                        open: String(response.objectForKey("Open")!))
-                    
-                    self.performSegueWithIdentifier("showStockDetail", sender: nil)
-
-                case .Failure(let error):
-                     print("Request failed with error: \(error)")
-                }
-        }
+        showDetailView(symbol)
         
     }
+    
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "showStockDetail" {
@@ -117,6 +122,27 @@ class StockSearchView: UIViewController, UITableViewDataSource, UITableViewDeleg
         cell.changePercenttage.backgroundColor = favoriteStocks[indexPath.row].valueForKey("changePositive") as! Bool ? green : red
         cell.marketCap.text = favoriteStocks[indexPath.row].valueForKey("marketCap") as? String
         return cell
+    }
+    
+    
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == .Delete {
+            let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            let manageContext = appDelegate.managedObjectContext
+            manageContext.deleteObject(favoriteStocks[indexPath.row])
+            favoriteStocks.removeAtIndex(indexPath.row)
+            do {
+                try manageContext.save()
+            } catch let error as NSError {
+                print("Could not save \(error), \(error.userInfo)")
+            }
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+        }
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let symbol = favoriteStocks[indexPath.row].valueForKey("symbol") as! String
+        showDetailView(symbol)
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {

@@ -13,6 +13,7 @@ class StockDetailHeaderTableViewCell: UITableViewCell {
 
     // MARK: Properties
     @IBOutlet weak var StockDetailLabel: UILabel!
+    @IBOutlet weak var favorateBtn: UIButton!
     
     // MARK: Action
     
