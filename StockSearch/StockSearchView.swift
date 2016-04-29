@@ -15,6 +15,7 @@ class StockSearchView: UIViewController, UITableViewDataSource, UITableViewDeleg
     // MARK: Properties
     @IBOutlet weak var symbolTextField: UITextField!
     @IBOutlet weak var autoCompleteContainerVIew: UIView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     var symbol: String!
     var currStock: Stock!
@@ -22,6 +23,7 @@ class StockSearchView: UIViewController, UITableViewDataSource, UITableViewDeleg
     var isFirstLoad: Bool = true
     var favoriteStocks = [NSManagedObject]()
     @IBOutlet weak var favoriateTableView: UITableView!
+    var timer = NSTimer()
     
     func showDetailView(symbol: String) {
         let url = "http://certain-mystery-126718.appspot.com/"
@@ -57,8 +59,17 @@ class StockSearchView: UIViewController, UITableViewDataSource, UITableViewDeleg
                     high: String(response.objectForKey("High")!),
                     low: String(response.objectForKey("Low")!),
                     open: String(response.objectForKey("Open")!))
-                
-                self.performSegueWithIdentifier("showStockDetail", sender: nil)
+                if self.currStock == nil {
+                    let alert = UIAlertController(title: "Get Stock Detail Failure",
+                        message: "",
+                        preferredStyle: .Alert)
+                    let okAction = UIAlertAction(title: "OK", style: .Default, handler: { (action: UIAlertAction)->Void in})
+                    alert.addAction(okAction)
+                    self.presentViewController(alert, animated: true, completion: nil)
+
+                } else {
+                    self.performSegueWithIdentifier("showStockDetail", sender: nil)
+                }
                 
             case .Failure(let error):
                 print("Request failed with error: \(error)")
@@ -90,6 +101,68 @@ class StockSearchView: UIViewController, UITableViewDataSource, UITableViewDeleg
         
     }
     
+    @IBAction func autoRefresh(sender: UISwitch) {
+        if sender.on {
+            timer.invalidate()
+            timer = NSTimer.scheduledTimerWithTimeInterval(10, target: self, selector: #selector(StockSearchView.refreshTable), userInfo: nil, repeats: true)
+        } else {
+            timer.invalidate()
+        }
+    }
+    
+    func refreshTable() {
+        self.activityIndicator.startAnimating()
+        for stock in favoriteStocks {
+            let symbol = stock.valueForKey("symbol")!
+            
+            let url = "http://certain-mystery-126718.appspot.com/"
+            Alamofire.request(.GET, url, parameters: ["symbol": symbol]).responseJSON {
+                response in switch response.result {
+                case .Success(let JSON):
+                    print("Success with JSON: \(JSON)")
+                    let response = JSON as! NSDictionary
+                    
+                    if response.objectForKey("Message") != nil {
+                        let alert = UIAlertController(title: "Invalid Symbol",
+                            message: "",
+                            preferredStyle: .Alert)
+                        let okAction = UIAlertAction(title: "OK", style: .Default, handler: { (action: UIAlertAction)->Void in})
+                        alert.addAction(okAction)
+                        self.presentViewController(alert, animated: true, completion: nil)
+                        return
+                    }
+                    
+                    //update stock
+                    self.currStock = Stock(
+                        status: String(response.objectForKey("Status")!),
+                        name: String(response.objectForKey("Name")!),
+                        symbol: String(response.objectForKey("Symbol")!),
+                        lastPrice: String(response.objectForKey("LastPrice")!),
+                        change: String(response.objectForKey("Change")!),
+                        changePercent: String(response.objectForKey("ChangePercent")!),
+                        timeStamp: String(response.objectForKey("Timestamp")!),
+                        marketCap: String(response.objectForKey("MarketCap")!),
+                        volume: String(response.objectForKey("Volume")!),
+                        changeYTD: String(response.objectForKey("ChangeYTD")!),
+                        changePercentYTD: String(response.objectForKey("ChangePercentYTD")!),
+                        high: String(response.objectForKey("High")!),
+                        low: String(response.objectForKey("Low")!),
+                        open: String(response.objectForKey("Open")!))
+                    stock.setValue(self.currStock.change, forKey: "change")
+                    stock.setValue(self.currStock.changePositive, forKey: "changePositive")
+                    stock.setValue(self.currStock.lastPrice, forKey: "stockPrice")
+                    self.activityIndicator.stopAnimating()
+                case .Failure(let error):
+                    print("Request failed with error: \(error)")
+                }
+            }
+        }
+        self.favoriateTableView.reloadData()
+    }
+    
+    @IBAction func refreshFavorTable(sender: UIButton) {
+        refreshTable()
+    }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "showStockDetail" {
@@ -153,7 +226,7 @@ class StockSearchView: UIViewController, UITableViewDataSource, UITableViewDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
+        activityIndicator.stopAnimating()
         
     }
     

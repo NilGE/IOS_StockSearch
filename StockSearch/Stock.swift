@@ -42,7 +42,7 @@ class Stock {
          low: String,
          open: String) {
         
-        if status == "FAIL" {
+        if status.containsString("Failure") {
             return nil
         }
         
