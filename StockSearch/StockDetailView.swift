@@ -9,8 +9,10 @@
 import UIKit
 import CoreData
 import Alamofire
+import FBSDKLoginKit
+import FBSDKShareKit
 
-class StockDetailView: UIViewController , UITableViewDataSource, UITableViewDelegate{
+class StockDetailView: UIViewController , UITableViewDataSource, UITableViewDelegate, FBSDKSharingDelegate {
     
     // MARK: Properties
     
@@ -20,7 +22,52 @@ class StockDetailView: UIViewController , UITableViewDataSource, UITableViewDele
     
     @IBOutlet weak var yahooChar: UIImageView!
     
-    // MARK : Action
+    // MARK: Facebook
+    
+    func sharer(sharer: FBSDKSharing!, didCompleteWithResults results: [NSObject : AnyObject]!) {
+        let alert = UIAlertController(title: "Post Success",
+                                      message: "",
+                                      preferredStyle: .Alert)
+        let okAction = UIAlertAction(title: "OK", style: .Default, handler: { (action: UIAlertAction)->Void in})
+        alert.addAction(okAction)
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func sharer(sharer: FBSDKSharing!, didFailWithError error: NSError!) {
+        let alert = UIAlertController(title: "Post Fail",
+                                      message: "",
+                                      preferredStyle: .Alert)
+        let okAction = UIAlertAction(title: "OK", style: .Default, handler: { (action: UIAlertAction)->Void in})
+        alert.addAction(okAction)
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func sharerDidCancel(sharer: FBSDKSharing!) {
+        let alert = UIAlertController(title: "Cancel Post",
+                                      message: "",
+                                      preferredStyle: .Alert)
+        let okAction = UIAlertAction(title: "OK", style: .Default, handler: { (action: UIAlertAction)->Void in})
+        alert.addAction(okAction)
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    // MARK: Action
+    @IBAction func facebookBtn(sender: UIButton) {
+        let content = FBSDKShareLinkContent()
+        content.contentURL = NSURL(string: "http://finance.yahoo.com/q?s=\(stock.symbol)")
+        content.contentTitle = "Current Stock Price of \(stock.name) is \(stock.lastPrice)"
+        content.contentDescription = "Stock information of \(stock.name) (\(stock.symbol))"
+        content.imageURL = NSURL(string: "http://chart.finance.yahoo.com/t?s=\(stock.symbol)&lang=en-US&width=400&height=300")
+        
+        let shareDialog: FBSDKShareDialog = FBSDKShareDialog()
+        
+        shareDialog.shareContent = content
+        shareDialog.delegate = self
+        shareDialog.fromViewController = self
+        shareDialog.show()
+    }
+    
+    
     @IBAction func favoriteBtn(sender: UIButton) {
         //select an entity
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
@@ -107,6 +154,10 @@ class StockDetailView: UIViewController , UITableViewDataSource, UITableViewDele
         let url = NSURL(string: "http://chart.finance.yahoo.com/t?s=\(stock.symbol)&lang=en-US&width=400&height=300")
         let data = NSData(contentsOfURL: url!)
         yahooChar.image = UIImage(data: data!)
+        
+//        let loginButton = FBSDKLoginButton()
+//        loginButton.center = view.center
+//        view.addSubview(loginButton)
     }
     
     override func viewWillAppear(animated: Bool) {

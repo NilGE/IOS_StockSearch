@@ -276,6 +276,7 @@
                                                     <state key="normal" image="Facebook"/>
                                                     <connections>
                                                         <action selector="FacebookBtn:" destination="qdB-hY-HA0" eventType="touchUpInside" id="xnQ-VT-4B7"/>
+                                                        <action selector="facebookBtn:" destination="xAn-g6-amc" eventType="touchUpInside" id="vGK-lD-RLO"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
