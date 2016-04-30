@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import Alamofire
 
 class StockDetailView: UIViewController , UITableViewDataSource, UITableViewDelegate{
     
@@ -15,6 +16,9 @@ class StockDetailView: UIViewController , UITableViewDataSource, UITableViewDele
     
     var stock: Stock!
     var curStock:NSManagedObject!
+    var newsArray = [News]()
+    
+    @IBOutlet weak var yahooChar: UIImageView!
     
     // MARK : Action
     @IBAction func favoriteBtn(sender: UIButton) {
@@ -47,13 +51,62 @@ class StockDetailView: UIViewController , UITableViewDataSource, UITableViewDele
         }
         
     }
-
     
     
+    // MARK: Segue
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "showHighChart" {
+            let HighChartViewController = segue.destinationViewController as! HighChartView
+            HighChartViewController.stock = self.stock
+        } else if segue.identifier == "showNews" {
+            let NewsViewController = segue.destinationViewController as! NewsView
+            NewsViewController.stock = self.stock
+            NewsViewController.newsArray = self.newsArray
+        }
+    }
+    
+    @IBAction func showHighChartBtn(sender: UIButton) {
+        self.performSegueWithIdentifier("showHighChart", sender: nil)
+    }
+    
+    @IBAction func showNewsBtn(sender: UIButton) {
+        
+        let url = "http://certain-mystery-126718.appspot.com/"
+        Alamofire.request(.GET, url, parameters: ["target": stock.symbol]).responseJSON {
+            response in switch response.result {
+            case.Success(let JSON):
+                let response = JSON as! NSDictionary
+                let d = response.objectForKey("d") as! NSDictionary
+                let results = d.objectForKey("results") as! NSArray
+                for result in results {
+                    let data = result as! NSDictionary
+                    let news = News(
+                        title: String(data.objectForKey("Title")!),
+                        content: String(data.objectForKey("Description")!),
+                        publisher: String(data.objectForKey("Source")!),
+                        date: String(data.objectForKey("Date")!),
+                        url: String(data.objectForKey("Url")!))
+                    self.newsArray.append(news)
+                }
+                self.performSegueWithIdentifier("showNews", sender: nil)
+            case.Failure(let error):
+                print("Bing news Request failed with error: \(error)")
+            }
+        }
+    }
+    
+    // MARK: view flow
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         self.title = stock.symbol
+        
+//        self.navigationController?.popViewControllerAnimated(true)
+        
+        // Show yahoo chart
+        let url = NSURL(string: "http://chart.finance.yahoo.com/t?s=\(stock.symbol)&lang=en-US&width=400&height=300")
+        let data = NSData(contentsOfURL: url!)
+        yahooChar.image = UIImage(data: data!)
     }
     
     override func viewWillAppear(animated: Bool) {

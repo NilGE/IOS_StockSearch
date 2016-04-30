@@ -25,6 +25,12 @@ class StockSearchView: UIViewController, UITableViewDataSource, UITableViewDeleg
     @IBOutlet weak var favoriateTableView: UITableView!
     var timer = NSTimer()
     
+    
+    // MARK: Segue
+    @IBAction func prepareForUnwind(segue: UIStoryboardSegue){
+        // for unwind to the first view
+    }
+    
     func showDetailView(symbol: String) {
         let url = "http://certain-mystery-126718.appspot.com/"
         Alamofire.request(.GET, url, parameters: ["symbol": symbol]).responseJSON {
@@ -72,7 +78,7 @@ class StockSearchView: UIViewController, UITableViewDataSource, UITableViewDeleg
                 }
                 
             case .Failure(let error):
-                print("Request failed with error: \(error)")
+                print("Stock Detail Request failed with error: \(error)")
             }
         }
     }

@@ -72,7 +72,7 @@
                                         <rect key="frame" x="0.0" y="28" width="580" height="77"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fNl-kR-WPo" id="bmy-9P-TZ9">
-                                            <rect key="frame" x="0.0" y="0.0" width="580" height="76.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="580" height="77"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Apple Inc" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kaB-Vq-Ihy">
@@ -226,22 +226,32 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6c5-gT-QRf">
                                         <rect key="frame" x="254" y="0.0" width="65" height="30"/>
                                         <state key="normal" title="Historical"/>
+                                        <connections>
+                                            <action selector="showHighChartBtn:" destination="xAn-g6-amc" eventType="touchUpInside" id="pdu-Xx-WIy"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fsL-Mi-JEu">
                                         <rect key="frame" x="521" y="0.0" width="39" height="30"/>
                                         <state key="normal" title="News"/>
+                                        <connections>
+                                            <action selector="showNewsBtn:" destination="xAn-g6-amc" eventType="touchUpInside" id="eNP-4k-u4Y"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Sax-BU-JBT">
                                 <rect key="frame" x="20" y="143" width="560" height="457"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <imageView key="tableFooterView" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="LJ0-Jo-RMd">
+                                    <rect key="frame" x="0.0" y="139" width="560" height="283"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </imageView>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="headerCell" rowHeight="67" id="qdB-hY-HA0" customClass="StockDetailHeaderTableViewCell" customModule="StockSearch" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="560" height="67"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qdB-hY-HA0" id="ExL-tM-Yow">
-                                            <rect key="frame" x="0.0" y="0.0" width="560" height="66.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="560" height="67"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Stock Details" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KhX-Dt-WYj">
@@ -298,7 +308,7 @@
                                         <rect key="frame" x="0.0" y="95" width="560" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HRs-mo-DTG" id="aoc-ab-It1">
-                                            <rect key="frame" x="0.0" y="0.0" width="560" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="560" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Change" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AFv-u0-7FX">
@@ -355,21 +365,36 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="Sax-BU-JBT" firstAttribute="leading" secondItem="CA6-wJ-FKG" secondAttribute="leadingMargin" id="6TF-7B-0sx"/>
                             <constraint firstAttribute="trailingMargin" secondItem="3Qz-gN-bZs" secondAttribute="trailing" id="GHW-fk-N5O"/>
                             <constraint firstItem="3Qz-gN-bZs" firstAttribute="leading" secondItem="CA6-wJ-FKG" secondAttribute="leadingMargin" id="HuU-kl-ske"/>
                             <constraint firstItem="3Qz-gN-bZs" firstAttribute="top" secondItem="SuT-Fc-PL4" secondAttribute="bottom" constant="29" id="Mek-Bi-CdO"/>
                             <constraint firstItem="Sax-BU-JBT" firstAttribute="leading" secondItem="CA6-wJ-FKG" secondAttribute="leadingMargin" id="ak3-Q5-NeK"/>
                             <constraint firstItem="Sax-BU-JBT" firstAttribute="trailing" secondItem="CA6-wJ-FKG" secondAttribute="trailingMargin" id="cxP-Q5-fY5"/>
+                            <constraint firstItem="Sax-BU-JBT" firstAttribute="trailing" secondItem="CA6-wJ-FKG" secondAttribute="trailingMargin" id="gSi-wT-I6b"/>
                             <constraint firstItem="4CT-vk-l0f" firstAttribute="top" secondItem="Sax-BU-JBT" secondAttribute="bottom" id="qzH-kn-piK"/>
                             <constraint firstItem="Sax-BU-JBT" firstAttribute="top" secondItem="3Qz-gN-bZs" secondAttribute="bottom" constant="20" id="ulg-xb-qx0"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Stock Detail View" id="mFz-8o-0c2"/>
+                    <navigationItem key="navigationItem" title="Stock Detail View" id="mFz-8o-0c2">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="Tyu-ss-g1q"/>
+                        <barButtonItem key="leftBarButtonItem" title="&lt; Back" id="zh4-lW-qlT">
+                            <connections>
+                                <segue destination="7h3-Hg-UKH" kind="unwind" unwindAction="prepareForUnwind:" id="Bka-IT-L1v"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="yahooChar" destination="LJ0-Jo-RMd" id="tiX-li-u6T"/>
+                        <segue destination="PPy-mX-1ci" kind="show" identifier="showHighChart" id="tpg-Sf-7bo"/>
+                        <segue destination="Y4b-Lt-3kh" kind="show" identifier="showNews" id="irH-l2-APa"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B79-IE-s5r" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="7h3-Hg-UKH" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2140" y="349"/>
+            <point key="canvasLocation" x="2171" y="349"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="bOC-J6-2ht">
@@ -389,10 +414,218 @@
             </objects>
             <point key="canvasLocation" x="622" y="349"/>
         </scene>
+        <!--High Chart View-->
+        <scene sceneID="bDh-Oc-1IA">
+            <objects>
+                <viewController id="PPy-mX-1ci" customClass="HighChartView" customModule="StockSearch" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="2hy-Lt-NVa"/>
+                        <viewControllerLayoutGuide type="bottom" id="NG3-Gq-3I8"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Syw-hT-bnX">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="vzL-Cc-euN">
+                                <rect key="frame" x="20" y="93" width="560" height="30"/>
+                                <subviews>
+                                    <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zl7-XO-RSr">
+                                        <rect key="frame" x="0.0" y="0.0" width="52" height="30"/>
+                                        <state key="normal" title="Current"/>
+                                        <connections>
+                                            <action selector="showStockDetailBtn:" destination="PPy-mX-1ci" eventType="touchUpInside" id="KUs-OO-8Cz"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6es-hk-dD8">
+                                        <rect key="frame" x="254" y="0.0" width="65" height="30"/>
+                                        <state key="normal" title="Historical"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Tc-tb-AyA">
+                                        <rect key="frame" x="521" y="0.0" width="39" height="30"/>
+                                        <state key="normal" title="News"/>
+                                        <connections>
+                                            <action selector="showNewsBtn:" destination="PPy-mX-1ci" eventType="touchUpInside" id="Ee8-3i-1qB"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sv1-ff-eTi">
+                                <rect key="frame" x="0.0" y="163" width="600" height="437"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="deviceRGB"/>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Sv1-ff-eTi" firstAttribute="top" secondItem="vzL-Cc-euN" secondAttribute="bottom" constant="40" id="CGz-6S-DTn"/>
+                            <constraint firstItem="vzL-Cc-euN" firstAttribute="leading" secondItem="Syw-hT-bnX" secondAttribute="leadingMargin" id="N90-Fe-dby"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="vzL-Cc-euN" secondAttribute="trailing" id="QBZ-wr-o2q"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Sv1-ff-eTi" secondAttribute="trailing" constant="-20" id="UZJ-wY-YUZ"/>
+                            <constraint firstItem="Sv1-ff-eTi" firstAttribute="leading" secondItem="Syw-hT-bnX" secondAttribute="leadingMargin" constant="-20" id="n4X-Wb-uZR"/>
+                            <constraint firstItem="vzL-Cc-euN" firstAttribute="top" secondItem="2hy-Lt-NVa" secondAttribute="bottom" constant="29" id="t3X-b5-nsH"/>
+                            <constraint firstItem="NG3-Gq-3I8" firstAttribute="top" secondItem="Sv1-ff-eTi" secondAttribute="bottom" id="tKO-iJ-fda"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="High Chart View" id="NTR-1G-0uv">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="CK4-ON-uil"/>
+                        <barButtonItem key="leftBarButtonItem" title="&lt; Back" id="T6l-BS-7u7">
+                            <connections>
+                                <segue destination="5I9-he-zba" kind="unwind" unwindAction="prepareForUnwind:" id="6Kh-LM-rOk"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="highChartWebView" destination="Sv1-ff-eTi" id="Mv6-YZ-w6f"/>
+                        <segue destination="xAn-g6-amc" kind="show" identifier="showStockDetail" id="DGb-Gf-Tbz"/>
+                        <segue destination="Y4b-Lt-3kh" kind="show" identifier="showNews" id="Jqw-vS-rQM"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3Je-S8-Fpy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="5I9-he-zba" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="2936" y="349"/>
+        </scene>
+        <!--News View-->
+        <scene sceneID="IM9-yJ-0EU">
+            <objects>
+                <viewController id="Y4b-Lt-3kh" customClass="NewsView" customModule="StockSearch" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="MkF-LN-eTP"/>
+                        <viewControllerLayoutGuide type="bottom" id="y3m-JT-yzH"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="5GR-Oh-t0G">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="UZ5-y2-IJy">
+                                <rect key="frame" x="20" y="93" width="560" height="30"/>
+                                <subviews>
+                                    <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vsd-g2-KIv">
+                                        <rect key="frame" x="0.0" y="0.0" width="52" height="30"/>
+                                        <state key="normal" title="Current"/>
+                                        <connections>
+                                            <action selector="showStockDetail:" destination="Y4b-Lt-3kh" eventType="touchUpInside" id="hOi-2t-1ak"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oQe-TB-oRe">
+                                        <rect key="frame" x="254" y="0.0" width="65" height="30"/>
+                                        <state key="normal" title="Historical"/>
+                                        <connections>
+                                            <action selector="showHIghChart:" destination="Y4b-Lt-3kh" eventType="touchUpInside" id="Vxb-QB-uXt"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NYL-2Q-0qC">
+                                        <rect key="frame" x="521" y="0.0" width="39" height="30"/>
+                                        <state key="normal" title="News"/>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="226" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="YHH-oj-cEZ">
+                                <rect key="frame" x="0.0" y="138" width="600" height="462"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NewsTableCell" rowHeight="226" id="yfH-bx-rSs" customClass="NewsTableViewCell" customModule="StockSearch" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="600" height="226"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yfH-bx-rSs" id="Q11-Hx-fqn">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="226"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" misplaced="YES" text="Apple (AAPL) Stock Continues to Decline After Icahn Dumped Shares, Jim Cramer's View" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ffS-0y-KlO">
+                                                    <rect key="frame" x="28" y="8" width="544" height="41"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="15"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lXh-n8-rnp">
+                                                    <rect key="frame" x="28" y="57" width="544" height="75"/>
+                                                    <string key="text">NEW YORK (TheStreet) -- Apple (AAPL - Get Report) stock is slumping 1.33% to $93.57 in early-afternoon trading on Friday after billionaire activist investor Carl Icahn told CNBC yesterday that he sold his entire stake in the iPhone maker, citing the risk</string>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="2016-04-02T13:10:16Z" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z1V-dP-0A6">
+                                                    <rect key="frame" x="28" y="181" width="544" height="19"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="The Street" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j2Q-z9-qBo">
+                                                    <rect key="frame" x="28" y="148" width="544" height="20"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="ffS-0y-KlO" firstAttribute="leading" secondItem="Q11-Hx-fqn" secondAttribute="leadingMargin" constant="20" id="1X8-kG-LBr"/>
+                                                <constraint firstItem="lXh-n8-rnp" firstAttribute="leading" secondItem="Q11-Hx-fqn" secondAttribute="leadingMargin" constant="20" id="3Ps-Fb-6TC"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="z1V-dP-0A6" secondAttribute="bottom" constant="18" id="AwB-8x-EHv"/>
+                                                <constraint firstItem="j2Q-z9-qBo" firstAttribute="trailing" secondItem="Q11-Hx-fqn" secondAttribute="trailingMargin" constant="-20" id="SP0-f2-oP8"/>
+                                                <constraint firstItem="ffS-0y-KlO" firstAttribute="trailing" secondItem="Q11-Hx-fqn" secondAttribute="trailingMargin" constant="-20" id="XBn-sA-N7p"/>
+                                                <constraint firstItem="z1V-dP-0A6" firstAttribute="top" secondItem="j2Q-z9-qBo" secondAttribute="bottom" constant="13" id="awV-az-Etp"/>
+                                                <constraint firstItem="lXh-n8-rnp" firstAttribute="top" secondItem="ffS-0y-KlO" secondAttribute="bottom" constant="8" id="c9F-IM-Tfy"/>
+                                                <constraint firstItem="j2Q-z9-qBo" firstAttribute="top" secondItem="lXh-n8-rnp" secondAttribute="bottom" constant="16" id="edQ-WM-zzM"/>
+                                                <constraint firstItem="z1V-dP-0A6" firstAttribute="leading" secondItem="Q11-Hx-fqn" secondAttribute="leadingMargin" constant="20" id="gD7-MN-4v3"/>
+                                                <constraint firstItem="z1V-dP-0A6" firstAttribute="trailing" secondItem="Q11-Hx-fqn" secondAttribute="trailingMargin" constant="-20" id="gHQ-gj-bRe"/>
+                                                <constraint firstItem="ffS-0y-KlO" firstAttribute="top" secondItem="Q11-Hx-fqn" secondAttribute="topMargin" id="hnK-BM-M6W"/>
+                                                <constraint firstItem="j2Q-z9-qBo" firstAttribute="leading" secondItem="Q11-Hx-fqn" secondAttribute="leadingMargin" constant="20" id="nVc-Ah-BH0"/>
+                                                <constraint firstItem="lXh-n8-rnp" firstAttribute="trailing" secondItem="Q11-Hx-fqn" secondAttribute="trailingMargin" constant="-20" id="tIY-pm-ogn"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="content" destination="lXh-n8-rnp" id="r44-Wb-Wvh"/>
+                                            <outlet property="date" destination="z1V-dP-0A6" id="JbU-Zw-KP9"/>
+                                            <outlet property="publisher" destination="j2Q-z9-qBo" id="JEq-7p-Ge0"/>
+                                            <outlet property="title" destination="ffS-0y-KlO" id="Qs4-lx-bZW"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="Y4b-Lt-3kh" id="0JH-FD-aTL"/>
+                                    <outlet property="delegate" destination="Y4b-Lt-3kh" id="FIE-U2-7y5"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="UZ5-y2-IJy" secondAttribute="trailing" id="1mC-J5-ncQ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="YHH-oj-cEZ" secondAttribute="trailing" constant="-20" id="2Mi-AG-seD"/>
+                            <constraint firstItem="UZ5-y2-IJy" firstAttribute="top" secondItem="MkF-LN-eTP" secondAttribute="bottom" constant="29" id="APL-gf-fDD"/>
+                            <constraint firstItem="YHH-oj-cEZ" firstAttribute="top" secondItem="UZ5-y2-IJy" secondAttribute="bottom" constant="15" id="DgO-hh-fA8"/>
+                            <constraint firstItem="YHH-oj-cEZ" firstAttribute="leading" secondItem="5GR-Oh-t0G" secondAttribute="leadingMargin" constant="-20" id="I6g-XG-Jav"/>
+                            <constraint firstItem="y3m-JT-yzH" firstAttribute="top" secondItem="YHH-oj-cEZ" secondAttribute="bottom" id="YUo-vE-1gl"/>
+                            <constraint firstItem="UZ5-y2-IJy" firstAttribute="leading" secondItem="5GR-Oh-t0G" secondAttribute="leadingMargin" id="lkd-D1-1J9"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="News View" id="MIP-10-JmK">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="ZZZ-de-DwQ"/>
+                        <barButtonItem key="leftBarButtonItem" title="&lt; Back" id="Stm-1b-MWG">
+                            <connections>
+                                <segue destination="pdi-ux-so6" kind="unwind" unwindAction="prepareForUnwind:" id="RLH-uN-5ba"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <segue destination="xAn-g6-amc" kind="show" identifier="showStockDetail" id="dhw-yI-L19"/>
+                        <segue destination="PPy-mX-1ci" kind="show" identifier="showHighChart" id="20B-UG-Kvk"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nsU-9l-ULA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="pdi-ux-so6" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="1817" y="1063"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Facebook" width="25" height="25"/>
         <image name="Refresh-w" width="32" height="32"/>
         <image name="StarEmpty" width="50" height="50"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="dhw-yI-L19"/>
+        <segue reference="irH-l2-APa"/>
+        <segue reference="20B-UG-Kvk"/>
+    </inferredMetricsTieBreakers>
 </document>
